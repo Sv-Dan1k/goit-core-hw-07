@@ -84,13 +84,11 @@ class Record:
         return "; ".join(str(phone) for phone in self.phones)
 
     
-    def change_phone(self, old_phone, new_phone):
-        if not self.phones:
-            return f"No phone numbers found for {self.name.value}"
-        old_phone = str(self.phones[0])
-        self.phones[0].value = new_phone
-        return f"Phone number changed from {old_phone} to {new_phone} for {self.name.value}"
 
+    def change_phone(self, old_phone, new_phone):
+        self.remove_phone(old_phone)
+        self.add_phone(new_phone)
+    
 
     def add_birthday(self, birthday):
         birthday_date = datetime.strptime(birthday, "%d.%m.%Y").date()
@@ -176,6 +174,7 @@ def add_contact(args, book: AddressBook):
         record.add_phone(phone)
     return message
 
+
 @input_error
 def change_phone(args, book):
     name, old_phone, new_phone = args
@@ -247,4 +246,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
